@@ -26,8 +26,7 @@ This repository contains a modular simulation model for vehicle dynamics, implem
 │   ├── vehicleModel.c          # Main program for simulation  
 ├── Makefile            # Build automation script  
 └── README.md           # Documentation  
-
-
+```
 ---
 
 ## Prerequisites  
@@ -44,16 +43,20 @@ This repository contains a modular simulation model for vehicle dynamics, implem
 ```bash
 git clone https://github.com/saurabhvyas97/vehicleModel.git  
 cd vehicleModel  
+```
 
 ### 2. Build the Project
 
 Run the following command to compile the project:
 ```bash
 make
+```
 
 ### 3. Run the Simulation
 Execure the program:
-```./build/vehicleModel
+```bash
+./build/vehicleModel
+```
 
 ---
 
@@ -67,7 +70,7 @@ Calculates tire forces (Lateral Fy) based on:
 ---
 
 ## Contributions
-Contributions are welcome! :)
+Contributions are welcome!
 
 To contribute:
 1. Fork the repository.
@@ -75,13 +78,16 @@ To contribute:
 2. Create a new branch:
 ```bash
 git checkout -b feature/YourFeature
+```
 
 3. Commit yor changes:
 ```bash
 git commit -m "Add new feature"
+```
 
 4. Push to the branch:
 ``bash
 git push origin feature/YourFeature
+```
 
 5. Open a pull request

@@ -86,7 +86,7 @@ git commit -m "Add new feature"
 ```
 
 4. Push to the branch:
-``bash
+```bash
 git push origin feature/YourFeature
 ```
 

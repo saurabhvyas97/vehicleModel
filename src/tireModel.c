@@ -9,4 +9,5 @@ void    calculateTireForces(const TireParameters *param, const TireInputs *input
 
     //Lateral Force (Fy)
     output->lateralForce    = peakForce * sin(param->shapeFactor * atan(param->stiffnessFactor * inputs->slipAngle));
+    output->longForce       = 0;
 }

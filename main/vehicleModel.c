@@ -16,10 +16,13 @@ void main()
     tireInput.slipAngle     = 0.1;
     tireInput.normalForce   = 1000;
 
-    //Calculate tire forces
-    calculateTireForces(&tireParam, &tireInput, &tireOutput);
+    while (1)
+    {
+        //Calculate tire forces
+        calculateTireForces(&tireParam, &tireInput, &tireOutput);
 
-    //Print the output
-    printf("Lateral Force: %f\n", tireOutput.lateralForce);
-    printf("Longitudinal Force: %f\n", tireOutput.longForce);
+        //Print the output
+        printf("Lateral Force: %f\n", tireOutput.lateralForce);
+        printf("Longitudinal Force: %f\n", tireOutput.longForce);
+    };
 }

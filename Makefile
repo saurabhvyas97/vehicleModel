@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Iinclude -lm
-SRC = src/tireMode.c main/vehicleModel.c
-OBJ = $(SRC:.c=.o)
+SRC = src/tireModel.c main/vehicleModel.c
+OBJ = $(patsubst %.c, build/%.o, $(SRC))
 TARGET = build/vehicleModel
 
 all: $(TARGET)
@@ -9,8 +9,9 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 
-%.o: %.c
+build/%.o: %.c
+	@mkdir -p $(dir $@)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -rf build/*

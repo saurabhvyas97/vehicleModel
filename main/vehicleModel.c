@@ -8,21 +8,20 @@ void main()
     TireOutputs     tireOutput;
 
     //Initialize tire parameters
-    tireParam.mu            = 0.8;
-    tireParam.stiffnessFactor = 100000;
-    tireParam.shapeFactor   = 1.0;
+    tireParam.mu                = 1.33;
+    tireParam.stiffnessFactor   = 0.05;
+    tireParam.shapeFactor       = 0.1335;
+    tireParam.peakForce         = 1.0;
 
     //Initialize tire inputs
-    tireInput.slipAngle     = 0.1;
-    tireInput.normalForce   = 1000;
+    tireInput.slipAngle         = -5;
+    tireInput.normalForce       = -650;
 
-    while (1)
-    {
-        //Calculate tire forces
-        calculateTireForces(&tireParam, &tireInput, &tireOutput);
+    //Calculate tire forces
+    calculateTireForces(&tireParam, &tireInput, &tireOutput);
 
-        //Print the output
-        printf("Lateral Force: %f\n", tireOutput.lateralForce);
-        printf("Longitudinal Force: %f\n", tireOutput.longForce);
-    };
+    //Print the output
+    printf("Lateral Force: %f\n", tireOutput.lateralForce);
+    printf("Longitudinal Force: %f\n", tireOutput.longForce);
+
 }

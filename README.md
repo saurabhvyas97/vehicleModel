@@ -27,3 +27,61 @@ This repository contains a modular simulation model for vehicle dynamics, implem
 ├── Makefile            # Build automation script  
 └── README.md           # Documentation  
 
+
+---
+
+## Prerequisites  
+
+- **Compiler**: A C compiler such as GCC.  
+- **Build System**: Make (recommended for using the provided Makefile).  
+- **Development Environment**: Tested on Linux and Windows.  
+
+---
+
+## Getting Started  
+
+### 1. Clone the Repository  
+```bash
+git clone https://github.com/saurabhvyas97/vehicleModel.git  
+cd vehicleModel  
+
+### 2. Build the Project
+
+Run the following command to compile the project:
+```bash
+make
+
+### 3. Run the Simulation
+Execure the program:
+```./build/vehicleModel
+
+---
+
+## Modules
+
+#### Tire Model (tireModel.c)
+Calculates tire forces (Lateral Fy) based on:
+- Slip angle
+- Normal load
+
+---
+
+## Contributions
+Contributions are welcome! :)
+
+To contribute:
+1. Fork the repository.
+
+2. Create a new branch:
+```bash
+git checkout -b feature/YourFeature
+
+3. Commit yor changes:
+```bash
+git commit -m "Add new feature"
+
+4. Push to the branch:
+``bash
+git push origin feature/YourFeature
+
+5. Open a pull request

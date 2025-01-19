@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "vehicleconfig.h": "c",
+        "lateraldynamics.h": "c"
+    }
+}

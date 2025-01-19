@@ -1,0 +1,12 @@
+#Ignore all .csv files
+*.csv
+
+# Ignore build directory
+build/
+
+# Ignore all object files
+*.o
+
+# Ignore other temporary files
+*.log
+*.tmp

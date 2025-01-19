@@ -1,23 +1,32 @@
 CC = gcc
 CFLAGS = -Iinclude -lm
-SRC = src/tireModel.c main/vehicleModel.c
-OBJ = $(patsubst %.c, build/%.o, $(SRC))
-TARGET = build/vehicleModel
+SRC_DIR = src
+MAIN_DIR = main
+BUILD_DIR = build
+TEST_DIR = test
+
+SRC = $(shell find $(SRC_DIR) -name "*.c") $(shell find $(MAIN_DIR) -name "*.c")
+OBJ = $(patsubst $(SRC_DIR)/%, $(BUILD_DIR)/%, $(SRC:.c=.o))
+TARGET = $(BUILD_DIR)/vehicleModel
+TEST_TARGET = $(TEST_DIR)/tireModel_test
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
+	@mkdir -p $(BUILD_DIR)
 	$(CC) -o $@ $^ $(CFLAGS)
 
-build/%.o: %.c
-	@mkdir -p $(dir $@)
+#Build object files
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-test: test/tireModel_test
+#Test build
+test: $(TEST_TARGET)
 
-test/tireModel_test: test/tireModel_test.c src/tireModel.c include/tireModel.h
-	$(CC) -o $@ test/tireModel_test.c src/tireModel.c -Iinclude -lcunit -lm
+$(TEST_TARGET): $(TEST_DIR)/tireModel_test.c $(SRC_DIR)/tireModel.c $(INCLUDE_DIR)/tireModel.h
+	$(CC) -o $@ $^ -I$(INCLUDE_DIR) -lcunit -lm
 
 clean:
-	rm -rf build/*
-	rm -f $(OBJ) $(TARGET) test/tireModel_test
+	rm -rf $(BUILD_DIR)/*
+	rm -f $(OBJ) $(TARGET) $(TEST_TARGET)

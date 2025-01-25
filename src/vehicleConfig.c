@@ -12,6 +12,7 @@ VehicleParameters g_vehicleParam = {
     .dragCoefficient    = 0.3,
     .momentOfInertia    = 1500,
     .wheelRadius        = 0.3,
-    .gearRatio          = 3.5,
-    .weightBiasFront    = 0.55
+    .powertraingearRatio= 3.5,
+    .weightBiasFront    = 0.55,
+    .steeringRatio      = 12
 };

@@ -14,8 +14,9 @@ typedef struct
     float   dragCoefficient;        //Drag coefficient of the vehicle
     float   momentOfInertia;        //Moment of inertia of the vehicle in kg-m^2
     float   wheelRadius;            //Radius of the wheel in m
-    float   gearRatio;              //Gear ratio of the vehicle
+    float   powertraingearRatio;    //Gear ratio of the vehicle's driveline
     float   weightBiasFront;        //Weight bias towards the front of the vehicle
+    float   steeringRatio;          //Steering ratio of the vehicle
 } VehicleParameters;
 
 //Define external variables

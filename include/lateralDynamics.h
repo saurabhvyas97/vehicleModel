@@ -33,10 +33,7 @@ void calculateWheelLoads(LateralDynamics *latDyn);
 //Calculate slip angles of the tires
 void calculateSlipAngles(const LongitudinalDynamics *longDyn, LateralDynamics *latDyn, const DrivingCommands *drivingCmd);
 
-//Get lateral force from all tires
-void calculateTotalLateralForce(const VehicleTireOutputs *tireOutput, LateralDynamics *latDyn);
-
 //Function to calculate lateral dynamics
-void calculateLateralDynamics(const TireOutputs *tireOutput);
+void calculateLateralDynamics(const TireOutputs *tireOutput, LateralDynamics *latDyn, LongitudinalDynamics *longDyn);
 
 #endif

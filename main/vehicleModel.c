@@ -72,12 +72,31 @@ void main()
         calculateSlipAngles(&longDyn, &latDyn, &drivingCmd);
     
         calculateVehicleTireForces(&tireParam, &latDyn, &tireInput, &vehicleTireOutput, &tireOutput);
+        calculateTotalLateralForce(&vehicleTireOutput, &latDyn);
 
         //Calculate lateral dynamics
         calculateLateralDynamics(&tireOutput);
 
         //Update simulation time
         simTime += g_simulationParam.timeStep;
+
+        //Increase the steering angle if steering is below 20 degrees
+        if (drivingCmd.steeringAngle < 20/57.3)
+        {
+            drivingCmd.steeringAngle += 0.1/57.3;
+        }
+        else
+        {
+            drivingCmd.steeringAngle = drivingCmd.steeringAngle;
+        }
+
+        if ((int)simTime % 10 == 0)
+        {
+            printf("Time: %f\n", simTime);
+            printf("Yaw rate: %f\n", latDyn.yawRate);
+            printf("Body slip angle: %f\n", latDyn.bodySlipAngle);
+            printf("Lateral acceleration: %f\n", latDyn.lateralAcceleration);
+        }
     }
 
 }

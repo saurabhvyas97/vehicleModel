@@ -2,6 +2,9 @@
     "files.associations": {
         "vehicleconfig.h": "c",
         "lateraldynamics.h": "c",
-        "tiremodel.h": "c"
+        "tiremodel.h": "c",
+        "drivingcommands.h": "c",
+        "math.h": "c",
+        "longitudinaldynamics.h": "c"
     }
 }

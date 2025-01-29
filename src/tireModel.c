@@ -1,6 +1,5 @@
 // C File: tireMode.c
 #include "tireModel.h"
-#include "lateralDynamics.h"
 #include <math.h>
 
 void    calculateTireForces(const TireParameters *param, const TireInputs *inputs, TireOutputs *output)
@@ -13,7 +12,7 @@ void    calculateTireForces(const TireParameters *param, const TireInputs *input
     output->longForce       = 0;
 }
 
-void    calculateVehicleTireForces(const TireParameters *param, const LateralDynamics *latDyn, TireInputs *inputs, VehicleTireOutputs *output, TireOutputs *tireOutput)
+void    calculateVehicleTireForces(const TireParameters *param, const LateralDynamics *latDyn, TireInputs *inputs, TireOutputs *tireOutput)
 {
     float normalLoadFrontInner = latDyn->normalForceFrontInner;
     float normalLoadFrontOuter = latDyn->normalForceFrontOuter;
@@ -24,21 +23,21 @@ void    calculateVehicleTireForces(const TireParameters *param, const LateralDyn
     //Lateral Force front inner (Fy)
     inputs->normalForce = normalLoadFrontInner;
     calculateTireForces(param, inputs, tireOutput);
-    output->lateralForceFrontInner = tireOutput->lateralForce;
+    tireOutput->lateralForceFrontInner = tireOutput->lateralForce;
 
     //Lateral Force front outer (Fy)
     inputs->normalForce = normalLoadFrontOuter;
     calculateTireForces(param, inputs, tireOutput);
-    output->lateralForceFrontOuter = tireOutput->lateralForce;
+    tireOutput->lateralForceFrontOuter = tireOutput->lateralForce;
 
     //Lateral Force rear inner (Fy)
     inputs->normalForce = normalLoadRearInner;
     calculateTireForces(param, inputs, tireOutput);
-    output->lateralForceRearInner = tireOutput->lateralForce;
+    tireOutput->lateralForceRearInner = tireOutput->lateralForce;
 
     //Lateral Force rear outer (Fy)
     inputs->normalForce = normalLoadRearOuter;
     calculateTireForces(param, inputs, tireOutput);
-    output->lateralForceRearOuter = tireOutput->lateralForce;
+    tireOutput->lateralForceRearOuter = tireOutput->lateralForce;
 }
 

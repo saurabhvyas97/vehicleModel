@@ -1,6 +1,4 @@
-#include "longitudinalDynamics.h"
 #include "lateralDynamics.h"
-#include "drivingCommands.h"
 #include <math.h>
 
 //Function to calculate loads on the wheels
@@ -26,21 +24,18 @@ void calculateSlipAngles(const LongitudinalDynamics *longDyn, LateralDynamics *l
     latDyn->slipAngleRearOuter      = atan((latDyn->lateralVelocity - g_vehicleParam.weightBiasFront * g_vehicleParam.wheelbase * latDyn->yawRate)/(longDyn->longitudinalVelocity + latDyn->yawRate*g_vehicleParam.trackWidthRear/2));
 }
 
-//Get lateral force from all tires
-void calculateTotalLateralForce(const VehicleTireOutputs *tireOutput, LateralDynamics *latDyn)
-{
-    latDyn->totalLateralForce = tireOutput->lateralForceFrontInner + tireOutput->lateralForceFrontOuter + tireOutput->lateralForceRearInner + tireOutput->lateralForceRearOuter;
-}
 
 //Function to calculate lateral dynamics
-void calculateLateralDynamics(const VehicleTireOutputs *vehicleTireOutput, LateralDynamics *latDyn, LongitudinalDynamics *longDyn)
+void calculateLateralDynamics(const TireOutputs *tireOutput, LateralDynamics *latDyn, LongitudinalDynamics *longDyn)
 {
-    float frontLateralForce = vehicleTireOutput->lateralForceFrontInner + vehicleTireOutput->lateralForceFrontOuter;
-    float rearLateralForce = vehicleTireOutput->lateralForceRearInner + vehicleTireOutput->lateralForceRearOuter;
+    float frontLateralForce = tireOutput->lateralForceFrontInner + tireOutput->lateralForceFrontOuter;
+    float rearLateralForce = tireOutput->lateralForceRearInner + tireOutput->lateralForceRearOuter;
+
+    float totalLateralForce = tireOutput->lateralForceFrontInner + tireOutput->lateralForceFrontOuter + tireOutput->lateralForceRearInner + tireOutput->lateralForceRearOuter;
 
     //Calculate yaw acceleration and body slip rate
     float yawAcceleration = (frontLateralForce * (1-g_vehicleParam.weightBiasFront)*g_vehicleParam.wheelbase) - (rearLateralForce * g_vehicleParam.weightBiasFront * g_vehicleParam.wheelbase);
-    float betaDot = (latDyn->totalLateralForce / g_vehicleParam.mass / longDyn->longitudinalVelocity) - latDyn->yawRate;
+    float betaDot = (totalLateralForce / g_vehicleParam.mass / longDyn->longitudinalVelocity) - latDyn->yawRate;
     
     //Calculate yaw acceleration and body-slip
     latDyn->yawRate = latDyn->yawRate + yawAcceleration * g_simulationParam.timeStep;

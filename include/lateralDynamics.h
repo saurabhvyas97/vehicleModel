@@ -3,6 +3,9 @@
 #define LATERAL_DYNAMICS_H
 
 #include "vehicleConfig.h"
+#include "simulaltionConfig.h"
+#include "longitudinalDynamics.h"
+#include "drivingCommands.h"
 #include "tireModel.h"
 
 //Define structure for lateral dynamics outputs
@@ -21,16 +24,17 @@ typedef struct
     float   normalForceFrontOuter;      //Normal force acting on the front outer tires in N
     float   normalForceRearInner;       //Normal force acting on the rear inner tires in N
     float   normalForceRearOuter;       //Normal force acting on the rear outer tires in N
+    float   totalLateralForce;          //Total lateral force acting on the vehicle in N
 } LateralDynamics;
 
 //Function to calculate loads on the wheels
 void calculateWheelLoads(LateralDynamics *latDyn);
 
 //Calculate slip angles of the tires
-void calculateSlipAngles(const LateralDynamics *latDyn);
+void calculateSlipAngles(const LongitudinalDynamics *longDyn, LateralDynamics *latDyn, const DrivingCommands *drivingCmd);
 
 //Get lateral force from all tires
-void calculateLateralForces(const TireParameters *tireParam, const LateralDynamics *latDyn, TireInputs *tireInput);
+void calculateTotalLateralForce(const VehicleTireOutputs *tireOutput, LateralDynamics *latDyn);
 
 //Function to calculate lateral dynamics
 void calculateLateralDynamics(const TireOutputs *tireOutput);

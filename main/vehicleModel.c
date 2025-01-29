@@ -1,5 +1,10 @@
 #include <stdio.h>
+#include "tireModel.h"
+#include "vehicleConfig.h"
+#include "simulaltionConfig.h"
 #include "lateralDynamics.h"
+#include "longitudinalDynamics.h"
+#include "drivingCommands.h"
 
 void main()
 {
@@ -8,6 +13,7 @@ void main()
     TireOutputs     tireOutput;
     LateralDynamics latDyn;
     FILE *outputFile;
+
 
     // Open the file to write the results
     outputFile = fopen("tire_forces.csv", "w");
@@ -51,5 +57,27 @@ void main()
     calculateWheelLoads(&latDyn);
     printf("Lateral acceleration: %f\n", latDyn.lateralAcceleration);
     printf("Normal force front inner: %f\n", latDyn.normalForceFrontInner);
+
+    LongitudinalDynamics longDyn;
+    DrivingCommands drivingCmd;
+    VehicleTireOutputs vehicleTireOutput;
+
+    drivingCmd.steeringAngle = 0/57.3;
+    longDyn.longitudinalVelocity = 40/3.6;
+
+    float simTime = 0;
+    while (simTime<g_simulationParam.endTime)
+    {   
+        calculateWheelLoads(&latDyn);
+        calculateSlipAngles(&longDyn, &latDyn, &drivingCmd);
+    
+        calculateVehicleTireForces(&tireParam, &latDyn, &tireInput, &vehicleTireOutput, &tireOutput);
+
+        //Calculate lateral dynamics
+        calculateLateralDynamics(&tireOutput);
+
+        //Update simulation time
+        simTime += g_simulationParam.timeStep;
+    }
 
 }

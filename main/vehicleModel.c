@@ -68,7 +68,18 @@ void main()
     while (simTime<g_simulationParam.endTime)
     {   
         calculateWheelLoads(&latDyn);
+        printf("Wheel loads calculated\n");
+        printf("Normal force front inner: %f\n", latDyn.normalForceFrontInner);
+        printf("Normal force front outer: %f\n", latDyn.normalForceFrontOuter);
+        printf("Normal force rear inner: %f\n", latDyn.normalForceRearInner);
+        printf("Normal force rear outer: %f\n", latDyn.normalForceRearOuter);
+
         calculateSlipAngles(&longDyn, &latDyn, &drivingCmd);
+        printf("Slip angles calculated\n");
+        printf("Slip angle front inner: %f\n", latDyn.slipAngleFrontInner);
+        printf("Slip angle front outer: %f\n", latDyn.slipAngleFrontOuter);
+        printf("Slip angle rear inner: %f\n", latDyn.slipAngleRearInner);
+        printf("Slip angle rear outer: %f\n", latDyn.slipAngleRearOuter);
     
         calculateVehicleTireForces(&tireParam, &latDyn, &tireInput, &tireOutput);
 
@@ -79,21 +90,13 @@ void main()
         simTime += g_simulationParam.timeStep;
 
         //Increase the steering angle if steering is below 20 degrees
-        if (drivingCmd.steeringAngle < 20/57.3)
+        if (drivingCmd.steeringAngle < 10/57.3)
         {
             drivingCmd.steeringAngle += 0.1/57.3;
         }
         else
         {
             drivingCmd.steeringAngle = drivingCmd.steeringAngle;
-        }
-
-        if ((int)simTime % 10 == 0)
-        {
-            printf("Time: %f\n", simTime);
-            printf("Yaw rate: %f\n", latDyn.yawRate);
-            printf("Body slip angle: %f\n", latDyn.bodySlipAngle);
-            printf("Lateral acceleration: %f\n", latDyn.lateralAcceleration);
         }
     }
 

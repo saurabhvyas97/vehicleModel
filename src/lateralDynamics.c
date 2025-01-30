@@ -15,9 +15,9 @@ void calculateWheelLoads(LateralDynamics *latDyn)
 
     //Calculate normal forces acting on the tires
     latDyn->normalForceFrontInner   = (g_vehicleParam.mass * 9.81 * g_vehicleParam.weightBiasFront / 2) - latLoadTransferFront;
-    latDyn->normalForceFrontOuter   = g_vehicleParam.mass * 9.81 * g_vehicleParam.weightBiasFront / 2 + latLoadTransferFront;
-    latDyn->normalForceRearInner    = g_vehicleParam.mass * 9.81 * (1 - g_vehicleParam.weightBiasFront) / 2 - latLoadTransferRear;
-    latDyn->normalForceRearOuter    = g_vehicleParam.mass * 9.81 * (1 - g_vehicleParam.weightBiasFront) / 2 + latLoadTransferRear;
+    latDyn->normalForceFrontOuter   = (g_vehicleParam.mass * 9.81 * g_vehicleParam.weightBiasFront / 2) + latLoadTransferFront;
+    latDyn->normalForceRearInner    = (g_vehicleParam.mass * 9.81 * (1 - g_vehicleParam.weightBiasFront) / 2) - latLoadTransferRear;
+    latDyn->normalForceRearOuter    = (g_vehicleParam.mass * 9.81 * (1 - g_vehicleParam.weightBiasFront) / 2) + latLoadTransferRear;
 }
 
 //Calculate slip angles of the tires

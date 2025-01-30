@@ -3,14 +3,14 @@
 
 //Initalize vehicle parameters
 VehicleParameters g_vehicleParam = {
-    .mass               = 1500,
-    .wheelbase          = 2.5,
-    .trackWidthFront    = 1.5,
-    .trackWidthRear     = 1.5,
-    .cgHeight           = 0.5,
+    .mass               = 300,
+    .wheelbase          = 1.5,
+    .trackWidthFront    = 0.8,
+    .trackWidthRear     = 0.8,
+    .cgHeight           = 0.28,
     .frontalArea        = 2.2,
     .dragCoefficient    = 0.3,
-    .momentOfInertia    = 1500,
+    .momentOfInertia    = 300*1.5*1.5,
     .wheelRadius        = 0.3,
     .powertraingearRatio= 3.5,
     .weightBiasFront    = 0.55,

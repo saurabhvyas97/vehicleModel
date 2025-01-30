@@ -1,7 +1,6 @@
 #ifndef DRIVING_COMMANDS_H
 #define DRIVING_COMMANDS_H
 
-#include "vehicleConfig.h"
 
 typedef enum
 {

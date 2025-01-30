@@ -1,5 +1,6 @@
 // C File: tireMode.c
 #include "tireModel.h"
+#include "lateralDynamics.h"
 #include <math.h>
 
 void    calculateTireForces(const TireParameters *param, const TireInputs *inputs, TireOutputs *output)
@@ -12,7 +13,7 @@ void    calculateTireForces(const TireParameters *param, const TireInputs *input
     output->longForce       = 0;
 }
 
-void    calculateVehicleTireForces(const TireParameters *param, const LateralDynamics *latDyn, TireInputs *inputs, TireOutputs *tireOutput)
+void    calculateVehicleTireForces(const TireParameters *param, LateralDynamics *latDyn, TireInputs *inputs, TireOutputs *tireOutput)
 {
     float normalLoadFrontInner = latDyn->normalForceFrontInner;
     float normalLoadFrontOuter = latDyn->normalForceFrontOuter;

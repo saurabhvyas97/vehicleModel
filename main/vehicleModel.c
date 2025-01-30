@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "tireModel.h"
 #include "vehicleConfig.h"
-#include "simulaltionConfig.h"
+#include "simulationConfig.h"
 #include "lateralDynamics.h"
 #include "longitudinalDynamics.h"
 #include "drivingCommands.h"
@@ -60,7 +60,6 @@ void main()
 
     LongitudinalDynamics longDyn;
     DrivingCommands drivingCmd;
-    VehicleTireOutputs vehicleTireOutput;
 
     drivingCmd.steeringAngle = 0/57.3;
     longDyn.longitudinalVelocity = 40/3.6;
@@ -71,11 +70,10 @@ void main()
         calculateWheelLoads(&latDyn);
         calculateSlipAngles(&longDyn, &latDyn, &drivingCmd);
     
-        calculateVehicleTireForces(&tireParam, &latDyn, &tireInput, &vehicleTireOutput, &tireOutput);
-        calculateTotalLateralForce(&vehicleTireOutput, &latDyn);
+        calculateVehicleTireForces(&tireParam, &latDyn, &tireInput, &tireOutput);
 
         //Calculate lateral dynamics
-        calculateLateralDynamics(&tireOutput);
+        calculateLateralDynamics(&tireOutput, &latDyn, &longDyn);
 
         //Update simulation time
         simTime += g_simulationParam.timeStep;

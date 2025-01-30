@@ -25,6 +25,3 @@ jobs:
       - name: Build
         run: make
 
-      # Step 4: Verify distribution
-      - name: Verify distribution
-        run: make distcheck

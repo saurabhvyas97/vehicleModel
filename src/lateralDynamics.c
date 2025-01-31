@@ -39,7 +39,7 @@ void calculateLateralDynamics(const TireOutputs *tireOutput, LateralDynamics *la
     float totalLateralForce = tireOutput->lateralForceFrontInner + tireOutput->lateralForceFrontOuter + tireOutput->lateralForceRearInner + tireOutput->lateralForceRearOuter;
 
     //Calculate yaw acceleration and body slip rate
-    float yawAcceleration = (frontLateralForce * (1-g_vehicleParam.weightBiasFront)*g_vehicleParam.wheelbase) - (rearLateralForce * g_vehicleParam.weightBiasFront * g_vehicleParam.wheelbase);
+    float yawAcceleration = ((frontLateralForce * (1-g_vehicleParam.weightBiasFront)*g_vehicleParam.wheelbase) - (rearLateralForce * g_vehicleParam.weightBiasFront * g_vehicleParam.wheelbase))/g_vehicleParam.momentOfInertia;
     float betaDot = (totalLateralForce / g_vehicleParam.mass / longDyn->longitudinalVelocity) - latDyn->yawRate;
     
     //Calculate yaw acceleration and body-slip
@@ -48,5 +48,8 @@ void calculateLateralDynamics(const TireOutputs *tireOutput, LateralDynamics *la
 
     //Calculate lateral acceleration
     latDyn->lateralAcceleration = longDyn->longitudinalVelocity*(latDyn->yawRate + betaDot)/9.81;
+
+    //Calculate lateral velocity
+    latDyn->lateralVelocity = latDyn->lateralVelocity + latDyn->lateralAcceleration*g_simulationParam.timeStep;
 
 }

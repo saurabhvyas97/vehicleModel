@@ -15,14 +15,14 @@ typedef struct LateralDynamics {
     float bodySlipAngle;              // Body slip angle of the vehicle in rad
     float yawRate;                    // Yaw rate of the vehicle in rad/s
     float bodyRollAngle;              // Body roll angle of the vehicle in rad
-    float slipAngleFrontInner;         // Slip angle of the front inner tires in rad
-    float slipAngleFrontOuter;         // Slip angle of the front outer tires in rad
-    float slipAngleRearInner;          // Slip angle of the rear inner tires in rad
-    float slipAngleRearOuter;         // Slip angle of the rear outer tires in rad
-    float normalForceFrontInner;      // Normal force acting on the front inner tires in N
-    float normalForceFrontOuter;      // Normal force acting on the front outer tires in N
-    float normalForceRearInner;       // Normal force acting on the rear inner tires in N
-    float normalForceRearOuter;       // Normal force acting on the rear outer tires in N
+    float slipAngleFrontLeft;         // Slip angle of the front Left tires in rad
+    float slipAngleFrontRight;         // Slip angle of the front Right tires in rad
+    float slipAngleRearLeft;          // Slip angle of the rear Left tires in rad
+    float slipAngleRearRight;         // Slip angle of the rear Right tires in rad
+    float normalForceFrontLeft;      // Normal force acting on the front Left tires in N
+    float normalForceFrontRight;      // Normal force acting on the front Right tires in N
+    float normalForceRearLeft;       // Normal force acting on the rear Left tires in N
+    float normalForceRearRight;       // Normal force acting on the rear Right tires in N
     float totalLateralForce;          // Total lateral force acting on the vehicle in N
 } LateralDynamics;
 

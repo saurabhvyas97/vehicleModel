@@ -15,34 +15,34 @@ void    calculateTireForces(const TireParameters *param, const TireInputs *input
 
 void    calculateVehicleTireForces(const TireParameters *param, LateralDynamics *latDyn, TireInputs *inputs, TireOutputs *tireOutput)
 {
-    float normalLoadFrontInner = -latDyn->normalForceFrontInner;
-    float normalLoadFrontOuter = -latDyn->normalForceFrontOuter;
-    float normalLoadRearInner  = -latDyn->normalForceRearInner;
-    float normalLoadRearOuter  = -latDyn->normalForceRearOuter;
+    float normalLoadFrontLeft = -latDyn->normalForceFrontLeft;
+    float normalLoadFrontRight = -latDyn->normalForceFrontRight;
+    float normalLoadRearLeft  = -latDyn->normalForceRearLeft;
+    float normalLoadRearRight  = -latDyn->normalForceRearRight;
 
 
-    //Lateral Force front inner (Fy)
-    inputs->normalForce = normalLoadFrontInner;
-    inputs->slipAngle   = 57.3*latDyn->slipAngleFrontInner;
+    //Lateral Force front Left (Fy)
+    inputs->normalForce = normalLoadFrontLeft;
+    inputs->slipAngle   = 57.3*latDyn->slipAngleFrontLeft;
     calculateTireForces(param, inputs, tireOutput);
-    tireOutput->lateralForceFrontInner = tireOutput->lateralForce;
+    tireOutput->lateralForceFrontLeft = tireOutput->lateralForce;
 
-    //Lateral Force front outer (Fy)
-    inputs->normalForce = normalLoadFrontOuter;
-    inputs->slipAngle   = 57.3*latDyn->slipAngleFrontOuter;
+    //Lateral Force front Right (Fy)
+    inputs->normalForce = normalLoadFrontRight;
+    inputs->slipAngle   = 57.3*latDyn->slipAngleFrontRight;
     calculateTireForces(param, inputs, tireOutput);
-    tireOutput->lateralForceFrontOuter = tireOutput->lateralForce;
+    tireOutput->lateralForceFrontRight = tireOutput->lateralForce;
 
-    //Lateral Force rear inner (Fy)
-    inputs->normalForce = normalLoadRearInner;
-    inputs->slipAngle   = 57.3*latDyn->slipAngleRearInner;
+    //Lateral Force rear Left (Fy)
+    inputs->normalForce = normalLoadRearLeft;
+    inputs->slipAngle   = 57.3*latDyn->slipAngleRearLeft;
     calculateTireForces(param, inputs, tireOutput);
-    tireOutput->lateralForceRearInner = tireOutput->lateralForce;
+    tireOutput->lateralForceRearLeft = tireOutput->lateralForce;
 
-    //Lateral Force rear outer (Fy)
-    inputs->normalForce = normalLoadRearOuter;
-    inputs->slipAngle   = 57.3*latDyn->slipAngleRearOuter;
+    //Lateral Force rear Right (Fy)
+    inputs->normalForce = normalLoadRearRight;
+    inputs->slipAngle   = 57.3*latDyn->slipAngleRearRight;
     calculateTireForces(param, inputs, tireOutput);
-    tireOutput->lateralForceRearOuter = tireOutput->lateralForce;
+    tireOutput->lateralForceRearRight = tireOutput->lateralForce;
 }
 

@@ -6,6 +6,7 @@
         "drivingcommands.h": "c",
         "math.h": "c",
         "longitudinaldynamics.h": "c",
-        "simulaltionconfig.h": "c"
+        "simulaltionconfig.h": "c",
+        "simulationconfig.h": "c"
     }
 }

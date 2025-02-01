@@ -14,5 +14,7 @@ VehicleParameters g_vehicleParam = {
     .wheelRadius        = 0.3,
     .powertraingearRatio= 3.5,
     .weightBiasFront    = 0.55,
-    .steeringRatio      = 12
+    .steeringRatio      = 12,
+    .maxSteeringAngle   = 20,
+    .maxLongitudinalVelocity = 40/3.6
 };

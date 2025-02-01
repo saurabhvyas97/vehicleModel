@@ -9,6 +9,9 @@ typedef struct
     float   initialVelocity;        //Initial velocity of the vehicle
     float   initialYawRate;         //Initial yaw rate of the vehicle
     float   initialWheelAngle;      //Initial steering wheel angle
+    float   rad2deg;                //Conversion factor for radians to degrees
+    float   deg2rad;                //Conversion factor for degrees to radians
+    float   gravity;                //Acceleration due to gravity
 } SimulationParameters;
 
 extern SimulationParameters g_simulationParam;

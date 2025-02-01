@@ -17,6 +17,8 @@ typedef struct
     float   powertraingearRatio;    //Gear ratio of the vehicle's driveline
     float   weightBiasFront;        //Weight bias towards the front of the vehicle
     float   steeringRatio;          //Steering ratio of the vehicle
+    float   maxSteeringAngle;       //Maximum steering angle of the vehicle in rad
+    float   maxLongitudinalVelocity;    //Maximum longitudinal velocity of the vehicle in m/s
 } VehicleParameters;
 
 //Define external variables

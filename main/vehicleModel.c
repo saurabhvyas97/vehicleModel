@@ -23,7 +23,7 @@ void main()
     }
 
     // Write the header to the file
-    fprintf(outputFile, "SlipAngle,LateralForce\n");
+    fprintf(outputFile, "SteeringAngle,LateralAcc,slip,force,load,bodyslip,longVelocity\n");
 
     //Initialize tire parameters
     tireParam.mu                = 3.09060945;
@@ -31,6 +31,7 @@ void main()
     tireParam.shapeFactor       = 0.2442768454;
     tireParam.peakForce         = 1.364104796;
 
+    /*
     //Initialize tire inputs
     tireInput.slipAngle         = -5;
     tireInput.normalForce       = -650;
@@ -44,60 +45,81 @@ void main()
         // Calculate tire forces
         calculateTireForces(&tireParam, &tireInput, &tireOutput);
 
-        // Write the output to the file
-        fprintf(outputFile, "%f,%f\n", slipAngle, tireOutput.lateralForce);
+        
     }
-
-    fclose(outputFile);
-
-    printf("Simulation complete. Results written to tire_forces.csv\n");
-
-
-    printf("Vehicle mass: %f\n", g_vehicleParam.mass);
-    calculateWheelLoads(&latDyn);
-    printf("Lateral acceleration: %f\n", latDyn.lateralAcceleration);
-    printf("Normal force front inner: %f\n", latDyn.normalForceFrontInner);
+    */
 
     LongitudinalDynamics longDyn;
     DrivingCommands drivingCmd;
 
-    drivingCmd.steeringAngle = 0/57.3;
-    longDyn.longitudinalVelocity = 40/3.6;
+    drivingCmd.steeringAngle = 20/57.3;
+    longDyn.longitudinalVelocity = 0.5/3.6;
+    latDyn.lateralAcceleration = 0.0;
 
+    float steeringIncrement = 0.0;
+    float longvelIncrement = 0.01/3.6;
     float simTime = 0;
     while (simTime<g_simulationParam.endTime)
     {   
         calculateWheelLoads(&latDyn);
+        /*
         printf("Wheel loads calculated\n");
-        printf("Normal force front inner: %f\n", latDyn.normalForceFrontInner);
-        printf("Normal force front outer: %f\n", latDyn.normalForceFrontOuter);
-        printf("Normal force rear inner: %f\n", latDyn.normalForceRearInner);
-        printf("Normal force rear outer: %f\n", latDyn.normalForceRearOuter);
+        printf("Normal force front Left: %f\n", latDyn.normalForceFrontLeft);
+        printf("Normal force front Right: %f\n", latDyn.normalForceFrontRight);
+        printf("Normal force rear Left: %f\n", latDyn.normalForceRearLeft);
+        printf("Normal force rear Right: %f\n", latDyn.normalForceRearRight);
+        */
 
         calculateSlipAngles(&longDyn, &latDyn, &drivingCmd);
+        /*
         printf("Slip angles calculated\n");
-        printf("Slip angle front inner: %f\n", latDyn.slipAngleFrontInner);
-        printf("Slip angle front outer: %f\n", latDyn.slipAngleFrontOuter);
-        printf("Slip angle rear inner: %f\n", latDyn.slipAngleRearInner);
-        printf("Slip angle rear outer: %f\n", latDyn.slipAngleRearOuter);
+        printf("Slip angle front Left: %f\n", latDyn.slipAngleFrontLeft);
+        printf("Slip angle front Right: %f\n", latDyn.slipAngleFrontRight);
+        printf("Slip angle rear Left: %f\n", latDyn.slipAngleRearLeft);
+        printf("Slip angle rear Right: %f\n", latDyn.slipAngleRearRight);
+        */
     
         calculateVehicleTireForces(&tireParam, &latDyn, &tireInput, &tireOutput);
+        /*
+        printf("TireForceFrontLeft %f\n", tireOutput.lateralForceFrontLeft);
+        printf("TireForceFrontRight %f\n", tireOutput.lateralForceFrontRight);
+        printf("TireForceRearLeft %f\n", tireOutput.lateralForceRearLeft);
+        printf("TireForceRearRight %f\n", tireOutput.lateralForceRearRight);
+        */
+        
 
         //Calculate lateral dynamics
         calculateLateralDynamics(&tireOutput, &latDyn, &longDyn);
+        //printf("Lateral acceleration is: %f\n", latDyn.lateralAcceleration);
 
         //Update simulation time
         simTime += g_simulationParam.timeStep;
 
         //Increase the steering angle if steering is below 20 degrees
-        if (drivingCmd.steeringAngle < 10/57.3)
+        if (drivingCmd.steeringAngle < g_vehicleParam.maxSteeringAngle*g_simulationParam.deg2rad)
         {
-            drivingCmd.steeringAngle += 0.1/57.3;
+            drivingCmd.steeringAngle += (g_vehicleParam.maxSteeringAngle-drivingCmd.steeringAngle)/g_vehicleParam.maxSteeringAngle*steeringIncrement*g_simulationParam.deg2rad;
         }
         else
         {
             drivingCmd.steeringAngle = drivingCmd.steeringAngle;
         }
+
+        //Increase the longitudinal velocity if velocity is below 40 m/s
+        if (longDyn.longitudinalVelocity < g_vehicleParam.maxLongitudinalVelocity)
+        {
+            longDyn.longitudinalVelocity += (g_vehicleParam.maxLongitudinalVelocity-longDyn.longitudinalVelocity)/g_vehicleParam.maxLongitudinalVelocity*longvelIncrement;
+        }
+        else
+        {
+            longDyn.longitudinalVelocity = longDyn.longitudinalVelocity;
+        }
+        
+        // Write the output to the file
+        fprintf(outputFile, "%f,%f,%f,%f,%f,%f,%f\n", drivingCmd.steeringAngle, latDyn.lateralAcceleration,latDyn.slipAngleFrontLeft,tireOutput.lateralForceFrontRight,latDyn.normalForceFrontRight,latDyn.bodySlipAngle,longDyn.longitudinalVelocity);
     }
+    fclose(outputFile);
+
+    printf("Simulation complete. Results written to tire_forces.csv\n");
 
 }

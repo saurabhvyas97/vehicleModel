@@ -23,7 +23,7 @@ void main()
     }
 
     // Write the header to the file
-    fprintf(outputFile, "SteeringAngle,LateralAcc,slip,force,load,bodyslip,longVelocity\n");
+    fprintf(outputFile, "Time,SteeringAngle,LateralAcc,slip,force,load,bodyslip,longVelocity\n");
 
     //Initialize tire parameters
     tireParam.mu                = 3.09060945;
@@ -116,7 +116,7 @@ void main()
         }
         
         // Write the output to the file
-        fprintf(outputFile, "%f,%f,%f,%f,%f,%f,%f\n", drivingCmd.steeringAngle, latDyn.lateralAcceleration,latDyn.slipAngleFrontLeft,tireOutput.lateralForceFrontRight,latDyn.normalForceFrontRight,latDyn.bodySlipAngle,longDyn.longitudinalVelocity);
+        fprintf(outputFile, "%f,%f,%f,%f,%f,%f,%f,%f\n", simTime, drivingCmd.steeringAngle, latDyn.lateralAcceleration,latDyn.slipAngleFrontLeft,tireOutput.lateralForceFrontRight,latDyn.normalForceFrontRight,latDyn.bodySlipAngle,longDyn.longitudinalVelocity);
     }
     fclose(outputFile);
 

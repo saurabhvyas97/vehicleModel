@@ -16,5 +16,5 @@ VehicleParameters g_vehicleParam = {
     .weightBiasFront    = 0.55,
     .steeringRatio      = 12,
     .maxSteeringAngle   = 20,
-    .maxLongitudinalVelocity = 40/3.6
+    .maxLongitudinalVelocity = 40/3.6 //Max speed in m/s
 };

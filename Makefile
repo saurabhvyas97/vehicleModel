@@ -9,7 +9,7 @@ SRC = $(shell find $(SRC_DIR) -name "*.c") $(shell find $(MAIN_DIR) -name "*.c")
 OBJ = $(patsubst $(SRC_DIR)/%, $(BUILD_DIR)/%, $(SRC:.c=.o))
 TARGET = $(BUILD_DIR)/vehicleModel
 TEST_TARGET = $(TEST_DIR)/tireModel_test
-
+ 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)

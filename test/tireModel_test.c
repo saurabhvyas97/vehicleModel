@@ -2,6 +2,7 @@
 #include <CUnit/Basic.h>
 #include "tireModel.h"
 
+//Test to verify sign
 void test_tireModel_checkSign(void) {
     
     TireParameters  tireParam;

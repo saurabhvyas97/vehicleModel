@@ -8,5 +8,6 @@ SimulationParameters g_simulationParam = {
     .initialWheelAngle  = 0,
     .rad2deg            = 57.3,
     .deg2rad            = 1/57.3,
-    .gravity            = 9.81
+    .gravity            = 9.81,
+    .logInterval        = 0.1
 };

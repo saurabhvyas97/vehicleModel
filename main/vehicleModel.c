@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include "tireModel.h"
-#include "vehicleConfig.h"
-#include "simulationConfig.h"
 #include "lateralDynamics.h"
-#include "longitudinalDynamics.h"
-#include "drivingCommands.h"
+#include "simulationTypes.h"
 
 void main()
 {
@@ -16,14 +13,14 @@ void main()
 
 
     // Open the file to write the results
-    outputFile = fopen("tire_forces.csv", "w");
+    outputFile = fopen("vehicleModelOutput.csv", "w");
     if (outputFile == NULL) {
         printf("Error opening file!\n");
         return;
     }
 
     // Write the header to the file
-    fprintf(outputFile, "SteeringAngle,LateralAcc,slip,force,load,bodyslip,longVelocity\n");
+    fprintf(outputFile, "SimulationTime,SteeringAngle,LateralAcc,slip,force,load,bodyslip,longVelocity,yawRate\n");
 
     //Initialize tire parameters
     tireParam.mu                = 3.09060945;
@@ -52,13 +49,14 @@ void main()
     LongitudinalDynamics longDyn;
     DrivingCommands drivingCmd;
 
-    drivingCmd.steeringAngle = 20/57.3;
-    longDyn.longitudinalVelocity = 0.5/3.6;
+    drivingCmd.steeringAngle = 0/57.3;
+    longDyn.longitudinalVelocity = 50/3.6;
     latDyn.lateralAcceleration = 0.0;
 
-    float steeringIncrement = 0.0;
-    float longvelIncrement = 0.01/3.6;
+    float steeringIncrement = 0.005;
+    float longvelIncrement = 0.1/3.6;
     float simTime = 0;
+    float nextLoggingTime = g_simulationParam.logInterval;
     while (simTime<g_simulationParam.endTime)
     {   
         calculateWheelLoads(&latDyn);
@@ -114,12 +112,18 @@ void main()
         {
             longDyn.longitudinalVelocity = longDyn.longitudinalVelocity;
         }
+
+        // Log the data at the specified logging interval
+        if (simTime >= nextLoggingTime)
+        {
+            fprintf(outputFile, "%f,%f,%f,%f,%f,%f,%f,%f,%f\n", simTime, drivingCmd.steeringAngle, latDyn.lateralAcceleration,latDyn.slipAngleFrontLeft,tireOutput.lateralForceFrontRight,latDyn.normalForceFrontRight,latDyn.bodySlipAngle,longDyn.longitudinalVelocity, latDyn.yawRate);
+            // Update the next logging time
+            nextLoggingTime += g_simulationParam.logInterval;
+        }
         
-        // Write the output to the file
-        fprintf(outputFile, "%f,%f,%f,%f,%f,%f,%f\n", drivingCmd.steeringAngle, latDyn.lateralAcceleration,latDyn.slipAngleFrontLeft,tireOutput.lateralForceFrontRight,latDyn.normalForceFrontRight,latDyn.bodySlipAngle,longDyn.longitudinalVelocity);
     }
     fclose(outputFile);
 
-    printf("Simulation complete. Results written to tire_forces.csv\n");
+    printf("Simulation complete. Results written to vehicleModelOutput.csv\n");
 
 }

@@ -1,6 +1,5 @@
 // C File: tireMode.c
 #include "tireModel.h"
-#include "lateralDynamics.h"
 #include <math.h>
 
 void    calculateTireForces(const TireParameters *param, const TireInputs *inputs, TireOutputs *output)

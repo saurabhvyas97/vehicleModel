@@ -1,9 +1,4 @@
 #include "lateralDynamics.h"
-#include "tireModel.h"
-#include "longitudinalDynamics.h"
-#include "drivingCommands.h"
-#include "simulationConfig.h"
-#include "vehicleConfig.h"
 #include <math.h>
 
 //Function to calculate loads on the wheels

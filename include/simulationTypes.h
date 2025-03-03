@@ -60,6 +60,18 @@ typedef struct {
 
 // Structure for tire inputs
 typedef struct {
+    float slipAngleFrontLeft;    // Slip angle of the front left tire in radians
+    float slipRatioFrontLeft;    // Slip ratio of the front left tire
+    float normalForceFrontLeft;    // Normal force acting on the front left tire in Newton
+    float slipAngleFrontRight;    // Slip angle of the front right tire in radians
+    float slipRatioFrontRight;    // Slip ratio of the front right tire
+    float normalForceFrontRight;    // Normal force acting on the front right tire in Newton
+    float slipAngleRearLeft;     // Slip angle of the rear left tire in radians
+    float slipRatioRearLeft;     // Slip ratio of the rear left tire
+    float normalForceRearLeft;     // Normal force acting on the rear left tire in Newton
+    float slipAngleRearRight;     // Slip angle of the rear right tire in radians
+    float slipRatioRearRight;     // Slip ratio of the rear right tire
+    float normalForceRearRight;     // Normal force acting on the rear right tire in Newton
     float slipAngle;      // Tire's slip angle in radians
     float normalForce;    // Normal force acting on the tire in Newton
 } TireInputs;

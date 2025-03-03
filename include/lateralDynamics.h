@@ -5,8 +5,8 @@
 #include "simulationTypes.h"
 
 
-// Function to calculate loads on the wheels
-void calculateWheelLoads(LateralDynamics *latDyn);
+// Function to calculate loads on the wheels resulting from lateral load transfer
+void calculateWheelLoads_LatLT(LateralDynamics *latDyn);
 
 // Calculate slip angles of the tires
 void calculateSlipAngles(LongitudinalDynamics *longDyn, LateralDynamics *latDyn, const DrivingCommands *drivingCmd);

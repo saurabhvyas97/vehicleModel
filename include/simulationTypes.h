@@ -60,6 +60,18 @@ typedef struct {
 
 // Structure for tire inputs
 typedef struct {
+    float slipAngleFrontLeft;    // Slip angle of the front left tire in radians
+    float slipRatioFrontLeft;    // Slip ratio of the front left tire
+    float normalForceFrontLeft;    // Normal force acting on the front left tire in Newton
+    float slipAngleFrontRight;    // Slip angle of the front right tire in radians
+    float slipRatioFrontRight;    // Slip ratio of the front right tire
+    float normalForceFrontRight;    // Normal force acting on the front right tire in Newton
+    float slipAngleRearLeft;     // Slip angle of the rear left tire in radians
+    float slipRatioRearLeft;     // Slip ratio of the rear left tire
+    float normalForceRearLeft;     // Normal force acting on the rear left tire in Newton
+    float slipAngleRearRight;     // Slip angle of the rear right tire in radians
+    float slipRatioRearRight;     // Slip ratio of the rear right tire
+    float normalForceRearRight;     // Normal force acting on the rear right tire in Newton
     float slipAngle;      // Tire's slip angle in radians
     float normalForce;    // Normal force acting on the tire in Newton
 } TireInputs;
@@ -112,6 +124,19 @@ typedef struct
     float   gravity;                //Acceleration due to gravity
     float   logInterval;            //Interval for logging the simulation data
 } SimulationParameters;
+
+//Define the structure for wheel dynamics
+typedef struct
+{
+    float   wheelAngularSpeedFrontLeft;             //Angular speed of the front left wheel in rad/s
+    float   wheelAngularSpeedFrontRight;            //Angular speed of the front right wheel in rad/s
+    float   wheelAngularSpeedRearLeft;              //Angular speed of the rear left wheel in rad/s
+    float   wheelAngularSpeedRearRight;             //Angular speed of the rear right wheel in rad/s
+    float   wheelAngularAccelerationFrontLeft;      //Angular acceleration of the front left wheel in rad/s^2
+    float   wheelAngularAccelerationFrontRight;     //Angular acceleration of the front right wheel in rad/s^2
+    float   wheelAngularAccelerationRearLeft;       //Angular acceleration of the rear left wheel in rad/s^2
+    float   wheelAngularAccelerationRearRight;      //Angular acceleration of the rear right wheel in rad/s^2
+} WheelDynamics;
 
 extern SimulationParameters g_simulationParam;
 

@@ -3,20 +3,22 @@
 #include "lateralDynamics.h"
 #include "simulationTypes.h"
 
-void main()
+int main()
 {
-    TireParameters  tireParam;
-    TireInputs      tireInput;
-    TireOutputs     tireOutput;
-    LateralDynamics latDyn;
-    FILE *outputFile;
+    TireParameters      tireParam;
+    TireInputs          tireInput;
+    TireOutputs         tireOutput;
+    LateralDynamics     latDyn;
+    FILE                *outputFile;
+    LongitudinalDynamics longDyn;
+    DrivingCommands     drivingCmd;
 
 
     // Open the file to write the results
     outputFile = fopen("vehicleModelOutput.csv", "w");
-    if (outputFile == NULL) {
+    if (outputFile == NULL)
+    {
         printf("Error opening file!\n");
-        return;
     }
 
     // Write the header to the file
@@ -28,65 +30,29 @@ void main()
     tireParam.shapeFactor       = 0.2442768454;
     tireParam.peakForce         = 1.364104796;
 
-    /*
-    //Initialize tire inputs
-    tireInput.slipAngle         = -5;
-    tireInput.normalForce       = -650;
-
-    // Simulate slip angles from -12 to 12 with 0.1 steps
-    for (float slipAngle = -12.0; slipAngle <= 12.0; slipAngle += 0.1) {
-        // Initialize tire inputs
-        tireInput.slipAngle     = slipAngle;
-        tireInput.normalForce   = -650;
-
-        // Calculate tire forces
-        calculateTireForces(&tireParam, &tireInput, &tireOutput);
-
-        
-    }
-    */
-
-    LongitudinalDynamics longDyn;
-    DrivingCommands drivingCmd;
-
+    //Initialize simulation parameters
     drivingCmd.steeringAngle = 0/57.3;
     longDyn.longitudinalVelocity = 50/3.6;
     latDyn.lateralAcceleration = 0.0;
-
     float steeringIncrement = 0.005;
     float longvelIncrement = 0.1/3.6;
     float simTime = 0;
     float nextLoggingTime = g_simulationParam.logInterval;
+
+/********************************************************************************************************************/
+    //Vehicle simulation loop
     while (simTime<g_simulationParam.endTime)
     {   
-        calculateWheelLoads(&latDyn);
-        /*
-        printf("Wheel loads calculated\n");
-        printf("Normal force front Left: %f\n", latDyn.normalForceFrontLeft);
-        printf("Normal force front Right: %f\n", latDyn.normalForceFrontRight);
-        printf("Normal force rear Left: %f\n", latDyn.normalForceRearLeft);
-        printf("Normal force rear Right: %f\n", latDyn.normalForceRearRight);
-        */
-
+        //Calculate normal forces for new simulation step
+        calculateWheelLoads_LatLT(&latDyn);
+     
+        //Calculate slip angles for new simulation step
         calculateSlipAngles(&longDyn, &latDyn, &drivingCmd);
-        /*
-        printf("Slip angles calculated\n");
-        printf("Slip angle front Left: %f\n", latDyn.slipAngleFrontLeft);
-        printf("Slip angle front Right: %f\n", latDyn.slipAngleFrontRight);
-        printf("Slip angle rear Left: %f\n", latDyn.slipAngleRearLeft);
-        printf("Slip angle rear Right: %f\n", latDyn.slipAngleRearRight);
-        */
-    
+  
+        //Calculate tire forces for new simulation step
         calculateVehicleTireForces(&tireParam, &latDyn, &tireInput, &tireOutput);
-        /*
-        printf("TireForceFrontLeft %f\n", tireOutput.lateralForceFrontLeft);
-        printf("TireForceFrontRight %f\n", tireOutput.lateralForceFrontRight);
-        printf("TireForceRearLeft %f\n", tireOutput.lateralForceRearLeft);
-        printf("TireForceRearRight %f\n", tireOutput.lateralForceRearRight);
-        */
-        
-
-        //Calculate lateral dynamics
+    
+        //Calculate lateral dynamics - lateral acceleration, yaw rate, body slip angle
         calculateLateralDynamics(&tireOutput, &latDyn, &longDyn);
         //printf("Lateral acceleration is: %f\n", latDyn.lateralAcceleration);
 
@@ -96,7 +62,8 @@ void main()
         //Increase the steering angle if steering is below 20 degrees
         if (drivingCmd.steeringAngle < g_vehicleParam.maxSteeringAngle*g_simulationParam.deg2rad)
         {
-            drivingCmd.steeringAngle += (g_vehicleParam.maxSteeringAngle-drivingCmd.steeringAngle)/g_vehicleParam.maxSteeringAngle*steeringIncrement*g_simulationParam.deg2rad;
+            drivingCmd.steeringAngle += (g_vehicleParam.maxSteeringAngle-drivingCmd.steeringAngle)/
+                                         g_vehicleParam.maxSteeringAngle*steeringIncrement*g_simulationParam.deg2rad;
         }
         else
         {
@@ -106,7 +73,8 @@ void main()
         //Increase the longitudinal velocity if velocity is below 40 m/s
         if (longDyn.longitudinalVelocity < g_vehicleParam.maxLongitudinalVelocity)
         {
-            longDyn.longitudinalVelocity += (g_vehicleParam.maxLongitudinalVelocity-longDyn.longitudinalVelocity)/g_vehicleParam.maxLongitudinalVelocity*longvelIncrement;
+            longDyn.longitudinalVelocity += (g_vehicleParam.maxLongitudinalVelocity-longDyn.longitudinalVelocity)/
+                                             g_vehicleParam.maxLongitudinalVelocity*longvelIncrement;
         }
         else
         {
@@ -116,14 +84,19 @@ void main()
         // Log the data at the specified logging interval
         if (simTime >= nextLoggingTime)
         {
-            fprintf(outputFile, "%f,%f,%f,%f,%f,%f,%f,%f,%f\n", simTime, drivingCmd.steeringAngle, latDyn.lateralAcceleration,latDyn.slipAngleFrontLeft,tireOutput.lateralForceFrontRight,latDyn.normalForceFrontRight,latDyn.bodySlipAngle,longDyn.longitudinalVelocity, latDyn.yawRate);
+            fprintf(outputFile, "%f,%f,%f,%f,%f,%f,%f,%f,%f\n", simTime, drivingCmd.steeringAngle, 
+            latDyn.lateralAcceleration,latDyn.slipAngleFrontLeft,tireOutput.lateralForceFrontRight,
+            latDyn.normalForceFrontRight,latDyn.bodySlipAngle,longDyn.longitudinalVelocity, latDyn.yawRate);
+
             // Update the next logging time
             nextLoggingTime += g_simulationParam.logInterval;
         }
-        
-    }
-    fclose(outputFile);
 
+    return 0;
+    }
+/********************************************************************************************************************/
+    // Close the file ans print results.
+    fclose(outputFile);
     printf("Simulation complete. Results written to vehicleModelOutput.csv\n");
 
 }

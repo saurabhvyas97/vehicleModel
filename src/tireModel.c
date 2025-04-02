@@ -5,7 +5,7 @@
 void    calculateTireForces(const TireParameters *param, const TireInputs *inputs, TireOutputs *output)
 {
     //Peak Force
-    float normalizedForce         = (param->mu + param->stiffnessFactor/1000*inputs->normalForce)*inputs->normalForce;
+    float normalizedForce   = (param->mu + param->stiffnessFactor/1000*inputs->normalForce)*inputs->normalForce;
 
     //Lateral Force (Fy)
     output->lateralForce    = normalizedForce * sin(param->peakForce * atan(param->shapeFactor * inputs->slipAngle));
@@ -14,10 +14,10 @@ void    calculateTireForces(const TireParameters *param, const TireInputs *input
 
 void    calculateVehicleTireForces(const TireParameters *param, LateralDynamics *latDyn, TireInputs *inputs, TireOutputs *tireOutput)
 {
-    float normalLoadFrontLeft = -latDyn->normalForceFrontLeft;
-    float normalLoadFrontRight = -latDyn->normalForceFrontRight;
-    float normalLoadRearLeft  = -latDyn->normalForceRearLeft;
-    float normalLoadRearRight  = -latDyn->normalForceRearRight;
+    float normalLoadFrontLeft   = -inputs->normalForceFrontLeft;
+    float normalLoadFrontRight  = -inputs->normalForceFrontRight;
+    float normalLoadRearLeft    = -inputs->normalForceRearLeft;
+    float normalLoadRearRight   = -inputs->normalForceRearRight;
 
 
     //Lateral Force front Left (Fy)

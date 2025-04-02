@@ -1,12 +1,12 @@
 #include "lateralDynamics.h"
 #include <math.h>
 
-//Function to calculate loads on the wheels
-void calculateWheelLoads(LateralDynamics *latDyn)
+//Function to calculate loads on the wheels resulting from lateral load transfer
+void calculateWheelLoads_LatLT(LateralDynamics *latDyn)
 {
     //Calculate load transfer
-    float latLoadTransferFront      = g_vehicleParam.mass * g_vehicleParam.weightBiasFront * latDyn->lateralAcceleration * g_vehicleParam.cgHeight / g_vehicleParam.wheelbase;
-    float latLoadTransferRear       = g_vehicleParam.mass * (1 - g_vehicleParam.weightBiasFront) * latDyn->lateralAcceleration * g_vehicleParam.cgHeight / g_vehicleParam.wheelbase;
+    float latLoadTransferFront      = g_vehicleParam.mass * g_vehicleParam.weightBiasFront * latDyn->lateralAcceleration * g_vehicleParam.cgHeight / g_vehicleParam.trackWidthFront;
+    float latLoadTransferRear       = g_vehicleParam.mass * (1 - g_vehicleParam.weightBiasFront) * latDyn->lateralAcceleration * g_vehicleParam.cgHeight / g_vehicleParam.trackWidthRear;
 
     //Calculate normal forces acting on the tires
     latDyn->normalForceFrontLeft   = (g_vehicleParam.mass * 9.81 * g_vehicleParam.weightBiasFront / 2) - latLoadTransferFront;

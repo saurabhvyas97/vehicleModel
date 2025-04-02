@@ -3,7 +3,7 @@
 #include "lateralDynamics.h"
 #include "simulationTypes.h"
 
-void main()
+int main()
 {
     TireParameters      tireParam;
     TireInputs          tireInput;
@@ -19,7 +19,6 @@ void main()
     if (outputFile == NULL)
     {
         printf("Error opening file!\n");
-        return;
     }
 
     // Write the header to the file
@@ -92,7 +91,8 @@ void main()
             // Update the next logging time
             nextLoggingTime += g_simulationParam.logInterval;
         }
-        
+
+    return 0;
     }
 /********************************************************************************************************************/
     // Close the file ans print results.

@@ -125,6 +125,19 @@ typedef struct
     float   logInterval;            //Interval for logging the simulation data
 } SimulationParameters;
 
+//Define the structure for wheel dynamics
+typedef struct
+{
+    float   wheelAngularSpeedFrontLeft;             //Angular speed of the front left wheel in rad/s
+    float   wheelAngularSpeedFrontRight;            //Angular speed of the front right wheel in rad/s
+    float   wheelAngularSpeedRearLeft;              //Angular speed of the rear left wheel in rad/s
+    float   wheelAngularSpeedRearRight;             //Angular speed of the rear right wheel in rad/s
+    float   wheelAngularAccelerationFrontLeft;      //Angular acceleration of the front left wheel in rad/s^2
+    float   wheelAngularAccelerationFrontRight;     //Angular acceleration of the front right wheel in rad/s^2
+    float   wheelAngularAccelerationRearLeft;       //Angular acceleration of the rear left wheel in rad/s^2
+    float   wheelAngularAccelerationRearRight;      //Angular acceleration of the rear right wheel in rad/s^2
+} WheelDynamics;
+
 extern SimulationParameters g_simulationParam;
 
 #endif //SIMULATION_TYPES_H
